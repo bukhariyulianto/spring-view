@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring View - Hunian Nyaman untuk Tumbuh Bersama | Citra Maja City</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e', 
+                            600: '#16a34a',
+                            700: '#15803d', 
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(22, 163, 74, 0.08)',
+                        'float': '0 20px 40px -10px rgba(0, 0, 0, 0.12)',
+                        'glass': '0 8px 32px 0 rgba(22, 163, 74, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism & UI Utilities */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(22, 163, 74, 0.12);
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 80% 20%, #dcfce7 0%, #f0fdf4 40%, #ffffff 100%);
+        }
+
+        .pattern-dots {
+            background-image: radial-gradient(rgba(22, 163, 74, 0.15) 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 100ms; }
+        .reveal-delay-2 { transition-delay: 200ms; }
+        .reveal-delay-3 { transition-delay: 300ms; }
+
+        /* Responsive Map Wrapper */
+        .map-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .map-wrapper {
+                padding-bottom: 42%;
+            }
+        }
+        .map-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #16a34a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased bg-gray-50 selection:bg-brand-200 selection:text-brand-900 overflow-x-hidden">
+
+    <!-- Sticky Glass Header -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Brand Logo -->
+                <a href="#beranda" class="flex items-center gap-3 group focus:outline-none">
+                    <img src="spring view.jpg" alt="Logo Spring View" class="h-11 w-11 object-contain rounded-full border border-brand-200 shadow-sm group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/100x100/15803d/ffffff?text=SV'">
+                    <div class="flex flex-col">
+                        <span class="font-heading font-bold text-lg sm:text-xl text-brand-800 leading-tight">Spring View</span>
+                        <span class="text-[10px] text-brand-600 font-semibold tracking-widest uppercase">Citra Maja City</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden lg:flex items-center space-x-5 xl:space-x-7">
+                    <a href="#beranda" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Beranda</a>
+                    <a href="#tentang" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Tentang</a>
+                    <a href="#lingkungan" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Lingkungan</a>
+                    <a href="#kehidupan" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Komunitas</a>
+                    <a href="#umkm" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">UMKM Warga</a>
+                    <a href="#galeri" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Galeri</a>
+                    <a href="#lokasi" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Lokasi</a>
+                </div>
+
+                <!-- Desktop Quick Actions -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <button onclick="openModal('Pendaftaran UMKM')" class="px-4 py-2 bg-brand-50 text-brand-700 border border-brand-200 hover:bg-brand-100 rounded-full text-xs font-semibold transition-all">
+                        Daftarkan Usaha
+                    </button>
+                    <a href="#info-warga" class="px-5 py-2.5 bg-brand-600 text-white hover:bg-brand-700 rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5">
+                        <i class="ph-bold ph-bell-ringing"></i> Info Warga
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-brand-600 focus:outline-none p-2 rounded-lg bg-gray-100/80 active:scale-95 transition-transform" aria-label="Toggle Navigation">
+                        <i class="ph ph-list text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xl transition-all">
+            <div class="px-4 pt-3 pb-6 space-y-2 max-h-[85vh] overflow-y-auto">
+                <a href="#beranda" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">🏠 Beranda</a>
+                <a href="#tentang" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">🏡 Tentang Spring View</a>
+                <a href="#lingkungan" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">🌿 Lingkungan</a>
+                <a href="#kehidupan" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">🤝 Komunitas Warga</a>
+                <a href="#umkm" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">🛍️ UMKM Warga</a>
+                <a href="#info-warga" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">📢 Informasi Warga</a>
+                <a href="#galeri" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">📸 Galeri Foto</a>
+                <a href="#lokasi" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">📍 Lokasi Maps</a>
+                
+                <div class="pt-4 border-t border-gray-100 flex flex-col gap-2">
+                    <button onclick="openModal('Pendaftaran UMKM'); closeMobileMenu();" class="w-full py-3 bg-brand-50 text-brand-700 font-bold rounded-xl border border-brand-200 text-center text-sm">
+                        ➕ Daftarkan Usaha Anda
+                    </button>
+                    <a href="#lokasi" class="mobile-link w-full py-3 bg-brand-600 text-white font-bold rounded-xl text-center text-sm shadow-md">
+                        🗺️ Buka Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative pt-28 pb-16 md:pt-40 md:pb-28 overflow-hidden hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-brand-200 text-brand-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+                    <span>🌿 Dari Warga, Untuk Warga, Tumbuh Bersama</span>
+                </div>
+                
+                <h1 class="reveal reveal-delay-1 text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-gray-900 leading-tight sm:leading-none mb-6">
+                    Spring View <br class="hidden sm:inline"/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-emerald-500">Hunian Nyaman untuk Tumbuh Bersama</span>
+                </h1>
+                
+                <p class="reveal reveal-delay-2 max-w-2xl mx-auto text-base sm:text-lg text-gray-600 mb-8 leading-relaxed">
+                    Selamat datang di <strong>Spring View Citra Maja City</strong>. Ruang hunian dan wadah digital sederhana yang dirancang sebagai tempat membangun kehidupan keluarga, menciptakan kenyamanan, serta menumbuhkan potensi komunitas.
+                </p>
+                
+                <div class="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto sm:max-w-none">
+                    <a href="#tentang" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-full font-bold text-base shadow-lg hover:shadow-brand-500/25 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-compass"></i> Jelajahi Spring View
+                    </a>
+                    <a href="#lokasi" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 rounded-full font-bold text-base shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-map-pin text-brand-600"></i> Lihat Lokasi Maps
+                    </a>
+                </div>
+
+                <!-- Fast Info Highlights -->
+                <div class="reveal reveal-delay-3 grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-3xl mx-auto pt-8 border-t border-brand-200/50">
+                    <div class="p-3 bg-white/60 rounded-2xl border border-brand-100">
+                        <p class="font-heading font-bold text-gray-900 text-lg sm:text-xl">Maja, Lebak</p>
+                        <p class="text-xs text-gray-500 font-medium">Kawasan Citra Maja City</p>
+                    </div>
+                    <div class="p-3 bg-white/60 rounded-2xl border border-brand-100">
+                        <p class="font-heading font-bold text-brand-600 text-lg sm:text-xl">Komunitas</p>
+                        <p class="text-xs text-gray-500 font-medium">Warga Aktif & Ramah</p>
+                    </div>
+                    <div class="p-3 bg-white/60 rounded-2xl border border-brand-100">
+                        <p class="font-heading font-bold text-gray-900 text-lg sm:text-xl">UMKM Warga</p>
+                        <p class="text-xs text-gray-500 font-medium">Kuliner, Jasa, & Sembako</p>
+                    </div>
+                    <div class="p-3 bg-white/60 rounded-2xl border border-brand-100">
+                        <p class="font-heading font-bold text-brand-600 text-lg sm:text-xl">Digital Hub</p>
+                        <p class="text-xs text-gray-500 font-medium">Informasi Terpadu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="py-16 md:py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                
+                <!-- Left Visual Showcase -->
+                <div class="reveal relative">
+                    <div class="aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-gray-100 shadow-xl border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Rumah Spring View" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/800x600/15803d/ffffff?text=Rumah+Spring+View'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 text-white">
+                            <span class="px-3 py-1 bg-brand-600 text-white rounded-full text-xs font-semibold mb-2 inline-block">Hunian Asri</span>
+                            <h3 class="font-heading font-bold text-xl sm:text-2xl">Tempat Tinggal, Tempat Bertumbuh</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -right-2 sm:right-6 bg-white p-4 rounded-2xl shadow-float border border-brand-100 max-w-xs flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 flex-shrink-0">
+                            <i class="ph-fill ph-heart text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Nilai Lingkungan</p>
+                            <p class="font-bold text-sm text-gray-800">Rumah Adalah Tempat Pulang</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Narrative -->
+                <div class="reveal reveal-delay-1 space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
+                        <i class="ph-fill ph-house-line"></i> TENTANG SPRING VIEW
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-900 leading-tight">
+                        Tempat Tinggal, <br/>
+                        <span class="text-brand-600">Tempat Bertumbuh</span>
+                    </h2>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
+                        Setiap keluarga memiliki cerita tentang rumah yang mereka impikan. Tempat untuk pulang setelah menjalani aktivitas, tempat anak-anak tumbuh dan bermain, tempat keluarga berkumpul, serta tempat tetangga menjadi bagian dari kehidupan sehari-hari.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        <strong>Spring View</strong> hadir sebagai bagian dari perjalanan tersebut. Berada di kawasan <strong>Citra Maja City</strong>, Spring View menjadi bagian dari lingkungan yang terus berkembang dan memberikan ruang bagi masyarakat untuk membangun kehidupan, keluarga, dan aktivitas bersama.
+                    </p>
+                    
+                    <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div class="flex items-center gap-2 font-semibold text-gray-800 bg-gray-50 p-3 rounded-xl">
+                            <i class="ph-bold ph-check-circle text-brand-600 text-lg"></i> Hunian Nyaman & Asri
+                        </div>
+                        <div class="flex items-center gap-2 font-semibold text-gray-800 bg-gray-50 p-3 rounded-xl">
+                            <i class="ph-bold ph-check-circle text-brand-600 text-lg"></i> Kawasan Citra Maja City
+                        </div>
+                        <div class="flex items-center gap-2 font-semibold text-gray-800 bg-gray-50 p-3 rounded-xl">
+                            <i class="ph-bold ph-check-circle text-brand-600 text-lg"></i> Komunitas Saling Dukung
+                        </div>
+                        <div class="flex items-center gap-2 font-semibold text-gray-800 bg-gray-50 p-3 rounded-xl">
+                            <i class="ph-bold ph-check-circle text-brand-600 text-lg"></i> Ekosistem Ekonomi Warga
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lingkungan Bento Grid -->
+    <section id="lingkungan" class="py-16 md:py-24 bg-gray-50 pattern-dots border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal">
+                <span class="text-brand-600 font-bold text-xs uppercase tracking-widest block mb-2">Perkembangan Kawasan</span>
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-900 mb-4">🌱 Lingkungan yang Terus Bertumbuh</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Tinggal di sebuah kawasan bukan hanya tentang memiliki rumah, tetapi juga tentang bagaimana lingkungan di sekitarnya berkembang secara berkelanjutan.</p>
+            </div>
+
+            <!-- Bento Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="reveal bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-soft transition-all">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold">
+                        <i class="ph-fill ph-buildings"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">Hunian & Kawasan Mandiri</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Berada dalam pengembangan kawasan kota terpadu Citra Maja City dengan penataan kawasan yang tertata rapi.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="reveal reveal-delay-1 bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-soft transition-all">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold">
+                        <i class="ph-fill ph-graduations"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">Fasilitas Pendidikan & Kesehatan</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Akses mudah ke berbagai sekolah, pusat kesehatan, dan sarana umum di sekitar Maja dan Citra Maja City.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="reveal reveal-delay-2 bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-soft transition-all">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 text-2xl font-bold">
+                        <i class="ph-fill ph-train"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">Akses Transportasi Mudah</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Terhubung dengan stasiun KRL Maja untuk mobilitas lancar menuju Jabodetabek.</p>
+                </div>
+
+                <!-- Card 4 Large -->
+                <div class="reveal bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-soft transition-all md:col-span-2">
+                    <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                        <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-3xl shrink-0">
+                            <i class="ph-fill ph-storefront"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">Area Komersial & Ruang Aktivitas Warga</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">Membuka berbagai peluang untuk kebutuhan harian, hiburan keluarga, hingga pertumbuhan ekonomi skala rumah tangga di lingkungan Spring View.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="reveal reveal-delay-1 bg-gradient-to-br from-brand-700 to-brand-900 p-6 sm:p-8 rounded-3xl text-white shadow-soft">
+                    <i class="ph-fill ph-sparkle text-3xl text-brand-300 mb-4"></i>
+                    <h3 class="font-heading font-bold text-xl mb-2">Tumbuh Bersama</h3>
+                    <p class="text-brand-100 text-sm leading-relaxed">Sebuah kawasan yang tumbuh seirama dengan masyarakat yang tinggal di dalamnya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kehidupan & Komunitas Section -->
+    <section id="kehidupan" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="reveal space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100">
+                        <i class="ph-fill ph-heart text-red-500"></i> KEHIDUPAN DI SPRING VIEW
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-900 leading-tight">
+                        Lebih dari Sekadar Rumah, <br/>
+                        <span class="text-brand-600">Ini Tentang Kebersamaan</span>
+                    </h2>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
+                        Ada sesuatu yang tidak bisa diukur hanya dengan luas bangunan: rasa memiliki terhadap lingkungan tempat tinggal.
+                    </p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center shrink-0 font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Pagi yang Hangat</h4>
+                                <p class="text-sm text-gray-600">Pagi dimulai, anak-anak bersiap sekolah, warga saling menyapa saat memulai aktivitas.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center shrink-0 font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Sore & Interaksi Warga</h4>
+                                <p class="text-sm text-gray-600">Sore menjadi waktu berinteraksi, anak-anak bermain, dan tetangga saling bertukar kabar.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center shrink-0 font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Malam & Kehangatan Keluarga</h4>
+                                <p class="text-sm text-gray-600">Malam kembali menjadi waktu tenang beristirahat bersama keluarga di hunian yang aman.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal reveal-delay-1 relative">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-3xl shadow-md h-52 sm:h-64 object-cover w-full" alt="Kegiatan Warga" onerror="this.src='https://placehold.co/400x500/16a34a/ffffff?text=Komunitas+Warga'">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="rounded-3xl shadow-md h-52 sm:h-64 object-cover w-full mt-6" alt="Anak-anak Bermain" onerror="this.src='https://placehold.co/400x500/15803d/ffffff?text=Keluarga'">
+                    </div>
+                    <div class="bg-brand-900 text-white p-6 rounded-3xl shadow-xl mt-4">
+                        <p class="font-heading font-bold text-lg mb-1">🤝 Komunitas Warga Active</p>
+                        <p class="text-xs text-brand-200">Lingkungan yang baik dibangun bersama oleh orang-orang yang peduli di dalamnya.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- UMKM Warga Directory Section -->
+    <section id="umkm" class="py-16 md:py-24 bg-brand-50/50 relative border-t border-brand-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-bold mb-3">
+                    <i class="ph-fill ph-storefront"></i> POTENSI USAHA WARGA
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-heading font-extrabold text-gray-900 mb-4">
+                    🛍️ Spring View UMKM
+                </h2>
+                <p class="text-gray-600 text-base sm:text-lg">
+                    Wadah digital sederhana yang mempertemukan warga dengan berbagai usaha, produk, dan jasa yang tumbuh dari lingkungan Spring View Citra Maja City.
+                </p>
+            </div>
+
+            <!-- Search Bar Component -->
+            <div class="reveal max-w-2xl mx-auto mb-10">
+                <div class="relative flex items-center bg-white rounded-full shadow-md border border-gray-200 p-2 focus-within:ring-2 focus-within:ring-brand-500">
+                    <i class="ph-bold ph-magnifying-glass text-gray-400 text-xl pl-3"></i>
+                    <input type="text" id="umkm-search-input" placeholder="Cari: Nasi goreng, Frozen food, Laundry, Tukang, Sembako..." class="w-full px-3 py-2 text-sm sm:text-base text-gray-800 bg-transparent focus:outline-none">
+                    <button onclick="performSearch()" class="px-5 py-2.5 bg-brand-600 text-white rounded-full text-xs sm:text-sm font-bold hover:bg-brand-700 transition-all shrink-0">
+                        Cari Usaha
+                    </button>
+                </div>
+                <!-- Search Pills Suggestion -->
+                <div class="flex flex-wrap gap-2 justify-center mt-3 text-xs text-gray-500">
+                    <span>Coba pencarian:</span>
+                    <button onclick="setSearch('Kuliner')" class="underline hover:text-brand-600">#MasakanRumahan</button>
+                    <button onclick="setSearch('Laundry')" class="underline hover:text-brand-600">#Laundry</button>
+                    <button onclick="setSearch('Sembako')" class="underline hover:text-brand-600">#Sembako</button>
+                    <button onclick="setSearch('Teknisi')" class="underline hover:text-brand-600">#TeknisiAC</button>
+                </div>
+            </div>
+
+            <!-- 4 Categories Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Category 1 -->
+                <div class="reveal bg-white p-6 rounded-3xl border border-gray-200 shadow-sm hover:shadow-soft transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-bowl-food"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">🍜 Kuliner</h3>
+                        <p class="text-xs text-gray-500 mb-4">Nikmat, dekat, dan dibuat sendiri oleh warga Spring View.</p>
+                        <ul class="text-xs text-gray-600 space-y-1.5 mb-6">
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Makanan siap santap & catering</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Masakan rumahan & snack</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Kue, pastry & frozen food</li>
+                        </ul>
+                    </div>
+                    <button onclick="filterCategory('Kuliner')" class="w-full py-2.5 bg-gray-50 hover:bg-brand-600 hover:text-white text-brand-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
+                        Lihat UMKM Kuliner <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="reveal reveal-delay-1 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm hover:shadow-soft transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-shopping-bag text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">🛒 Kebutuhan Harian</h3>
+                        <p class="text-xs text-gray-500 mb-4">Butuh sesuatu? Cari lebih dekat di tetangga lingkungan.</p>
+                        <ul class="text-xs text-gray-600 space-y-1.5 mb-6">
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Sembako & isi ulang air</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Kebutuhan dapur & rumah</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Produk perlengkapan keluarga</li>
+                        </ul>
+                    </div>
+                    <button onclick="filterCategory('Kebutuhan')" class="w-full py-2.5 bg-gray-50 hover:bg-brand-600 hover:text-white text-brand-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
+                        Lihat Kebutuhan <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="reveal reveal-delay-2 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm hover:shadow-soft transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-wrench"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">🔧 Jasa & Keahlian</h3>
+                        <p class="text-xs text-gray-500 mb-4">Keahlian warga adalah aset berharga untuk lingkungan.</p>
+                        <ul class="text-xs text-gray-600 space-y-1.5 mb-6">
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Laundry & servis elektronik</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Tukang, jahit & perbaikan</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Les privat, fotografi & desain</li>
+                        </ul>
+                    </div>
+                    <button onclick="filterCategory('Jasa')" class="w-full py-2.5 bg-gray-50 hover:bg-brand-600 hover:text-white text-brand-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
+                        Lihat Jasa <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="reveal reveal-delay-3 bg-white p-6 rounded-3xl border border-gray-200 shadow-sm hover:shadow-soft transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-paint-brush"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-gray-900 mb-2">🎨 Produk Kreatif</h3>
+                        <p class="text-xs text-gray-500 mb-4">Karya buatan warga untuk keluarga dan lingkungan.</p>
+                        <ul class="text-xs text-gray-600 space-y-1.5 mb-6">
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Fashion, hijab & aksesori</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Kerajinan & hampers cantik</li>
+                            <li class="flex items-center gap-1.5"><i class="ph-bold ph-check text-brand-600"></i> Produk handmade rumahan</li>
+                        </ul>
+                    </div>
+                    <button onclick="filterCategory('Kreatif')" class="w-full py-2.5 bg-gray-50 hover:bg-brand-600 hover:text-white text-brand-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
+                        Lihat Produk <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Principle Banner -->
+            <div class="reveal bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center text-3xl shrink-0">
+                        <i class="ph-fill ph-lightning"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-lg text-gray-900">Prinsip Belanja Tetangga Sederhana</h4>
+                        <p class="text-sm text-gray-600">Temukan di katalog &rarr; Pilih Produk/Jasa &rarr; Hubungi WhatsApp &rarr; Pesan Langsung</p>
+                    </div>
+                </div>
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button onclick="openModal('Pendaftaran UMKM')" class="flex-1 md:flex-none px-6 py-3 bg-brand-600 text-white font-bold rounded-full text-sm hover:bg-brand-700 shadow-md transition-all">
+                        ➕ Daftarkan Usaha Anda
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mengapa Memilih UMKM Warga -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-gray-900 mb-4">⭐ Mengapa Memilih UMKM Warga?</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Karena setiap pembelian memiliki cerita. Ketika kita membeli dari usaha warga, kita bukan sekadar mendapatkan produk, melainkan membantu sesama tetangga.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="reveal bg-brand-50/60 p-8 rounded-3xl border border-brand-100 text-center hover:-translate-y-1 transition-transform">
+                    <div class="w-16 h-16 bg-white text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl shadow-sm">
+                        <i class="ph-fill ph-handshake"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">🤝 Dukung Tetangga</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Kenali usaha yang ada di sekitar rumah kita. Belanja lebih praktis dan mempererat silaturahmi antarwarga.</p>
+                </div>
+
+                <div class="reveal reveal-delay-1 bg-brand-50/60 p-8 rounded-3xl border border-brand-100 text-center hover:-translate-y-1 transition-transform">
+                    <div class="w-16 h-16 bg-white text-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl shadow-sm">
+                        <i class="ph-fill ph-heart"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">❤️ Dukung Keluarga</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Di balik sebuah usaha terdapat waktu, tenaga, kreativitas, dan perjuangan keluarga tetangga kita.</p>
+                </div>
+
+                <div class="reveal reveal-delay-2 bg-brand-50/60 p-8 rounded-3xl border border-brand-100 text-center hover:-translate-y-1 transition-transform">
+                    <div class="w-16 h-16 bg-white text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl shadow-sm">
+                        <i class="ph-fill ph-plant"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-gray-900 mb-3">🌱 Tumbuhkan Lingkungan</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Semakin banyak usaha warga yang didukung, semakin besar peluang ekonomi mandiri berkembang di Spring View.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Langkah Bergabung UMKM Section -->
+    <section class="py-16 md:py-24 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12 mb-16">
+                <div class="reveal max-w-xl">
+                    <span class="text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">Punya Usaha di Spring View?</span>
+                    <h2 class="text-3xl sm:text-4xl font-heading font-bold mb-4">🚀 5 Langkah Sederhana Menampilkan Usaha Anda</h2>
+                    <p class="text-gray-400">Mulailah memperkenalkan usaha Anda kepada lingkungan tetangga sendiri. Bebas biaya dan mudah dihubungi via WhatsApp.</p>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <button onclick="openModal('Pendaftaran UMKM')" class="px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-full text-base shadow-lg transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-plus-circle"></i> Daftarkan Usaha Sekarang
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="reveal bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <span class="text-brand-400 font-heading font-extrabold text-2xl block mb-2">01</span>
+                    <h4 class="font-bold text-white mb-2">Isi Data Form</h4>
+                    <p class="text-xs text-gray-400">Lengkapi nama usaha, kategori, lokasi rumah, dan kontak WA.</p>
+                </div>
+                <div class="reveal reveal-delay-1 bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <span class="text-brand-400 font-heading font-extrabold text-2xl block mb-2">02</span>
+                    <h4 class="font-bold text-white mb-2">Kirim Foto</h4>
+                    <p class="text-xs text-gray-400">Gunakan foto produk atau usaha yang jelas & menarik.</p>
+                </div>
+                <div class="reveal reveal-delay-2 bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <span class="text-brand-400 font-heading font-extrabold text-2xl block mb-2">03</span>
+                    <h4 class="font-bold text-white mb-2">Verifikasi Admin</h4>
+                    <p class="text-xs text-gray-400">Pengecekan data usaha singkat oleh admin warga.</p>
+                </div>
+                <div class="reveal reveal-delay-3 bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <span class="text-brand-400 font-heading font-extrabold text-2xl block mb-2">04</span>
+                    <h4 class="font-bold text-white mb-2">Tampil Katalog</h4>
+                    <p class="text-xs text-gray-400">Usaha langsung dipublikasikan di web Spring View.</p>
+                </div>
+                <div class="reveal reveal-delay-3 bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <span class="text-brand-400 font-heading font-extrabold text-2xl block mb-2">05</span>
+                    <h4 class="font-bold text-white mb-2">Dikenal Warga</h4>
+                    <p class="text-xs text-gray-400">Tetangga dengan mudah menemukan dan memesan dari Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Atmospheric Bayangkan Kehidupan -->
+    <section class="py-20 bg-brand-950 text-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="reveal text-2xl sm:text-4xl font-heading font-bold text-brand-100 mb-8">🌅 Bayangkan Kehidupan Anda di Sini</h2>
+            <div class="reveal reveal-delay-1 space-y-4 text-base sm:text-lg text-brand-200 font-light leading-relaxed">
+                <p>Bangun di pagi hari. Membuka pintu rumah. Melihat aktivitas lingkungan yang hijau dan tenang.</p>
+                <p>Anak-anak bersiap menjalani hari. Orang tua menjalankan aktivitas.</p>
+                <p>Sore hari kembali ke rumah. Kemudian berkumpul bersama keluarga dan menyapa tetangga.</p>
+                <div class="w-16 h-1 bg-brand-500 mx-auto my-6 rounded-full"></div>
+                <p class="font-semibold text-white text-xl">Itulah arti sebuah rumah.</p>
+                <p class="text-sm text-brand-300">Bukan hanya dinding dan atap. Tetapi tempat untuk menjalani kehidupan.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informasi Warga & Galeri Section -->
+    <section id="info-warga" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                
+                <!-- Info Warga Box -->
+                <div class="reveal space-y-6 bg-brand-50 p-6 sm:p-8 rounded-3xl border border-brand-100">
+                    <div>
+                        <span class="px-3 py-1 bg-brand-600 text-white rounded-full text-xs font-bold mb-2 inline-block">PUSAT DIGITAL</span>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900 mb-3">📢 Informasi Warga</h2>
+                        <p class="text-sm text-gray-600">Satu alamat digital untuk pengumuman, fasilitas, dan kontak penting lingkungan Spring View.</p>
+                    </div>
+
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 p-3 bg-white rounded-xl border border-brand-100 font-medium text-gray-800">
+                            <i class="ph-fill ph-megaphone text-brand-600 text-lg"></i> Pengumuman & Kegiatan Komunitas
+                        </li>
+                        <li class="flex items-center gap-3 p-3 bg-white rounded-xl border border-brand-100 font-medium text-gray-800">
+                            <i class="ph-fill ph-shield-check text-brand-600 text-lg"></i> Informasi Keamanan & Fasilitas
+                        </li>
+                        <li class="flex items-center gap-3 p-3 bg-white rounded-xl border border-brand-100 font-medium text-gray-800">
+                            <i class="ph-fill ph-phone text-brand-600 text-lg"></i> Kontak Penting & Layanan Warga
+                        </li>
+                    </ul>
+
+                    <button onclick="openModal('Portal Informasi Warga')" class="w-full py-3 bg-brand-600 text-white font-bold rounded-xl text-sm shadow-md hover:bg-brand-700 transition-colors">
+                        Akses Portal Informasi Warga
+                    </button>
+                </div>
+
+                <!-- Galeri Foto -->
+                <div id="galeri" class="reveal reveal-delay-1 lg:col-span-2 space-y-6">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-heading font-bold text-gray-900 mb-2">📸 Galeri Spring View</h2>
+                        <p class="text-gray-600 text-sm">Cerita dari lingkungan kita: momen kebersamaan, lanskap perumahan, dan kegiatan warga.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="rounded-2xl overflow-hidden shadow-sm h-40 bg-gray-100 group relative">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Hunian Spring View" onerror="this.src='https://placehold.co/400x300/16a34a/ffffff?text=Rumah'">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-xs text-white font-medium">Suasana Lingkungan</div>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-sm h-40 bg-gray-100 group relative">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Rumah" onerror="this.src='https://placehold.co/400x300/15803d/ffffff?text=Hunian'">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-xs text-white font-medium">Rumah Warga</div>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-sm h-40 bg-gray-100 group relative col-span-2 sm:col-span-1">
+                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Kebersamaan" onerror="this.src='https://placehold.co/400x300/166534/ffffff?text=Kebersamaan'">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-xs text-white font-medium">Aktivitas Bersama</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 flex items-center justify-between text-xs text-gray-600">
+                        <span>Punya foto kegiatan warga Spring View yang ingin ditampilkan?</span>
+                        <button onclick="openModal('Kirim Foto Galeri')" class="text-brand-700 font-bold underline hover:text-brand-800">Kirim Foto</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Jaga Lingkungan Together Section -->
+    <section class="py-16 bg-brand-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="reveal text-2xl sm:text-3xl font-heading font-bold mb-6">🤝 Mari Jaga Lingkungan Bersama</h2>
+            <p class="reveal reveal-delay-1 max-w-2xl mx-auto text-sm sm:text-base text-brand-200 mb-8 leading-relaxed">
+                Lingkungan yang nyaman tidak tercipta dengan sendirinya. Ia membutuhkan kepedulian: membuang sampah pada tempatnya, menjaga keamanan, menghormati tetangga, merawat fasilitas, dan menjaga komunikasi antarwarga.
+            </p>
+            <div class="reveal reveal-delay-2 flex flex-wrap justify-center gap-3 text-xs font-semibold">
+                <span class="px-4 py-2 bg-brand-800 rounded-full border border-brand-700">🌱 Kebersihan Lingkungan</span>
+                <span class="px-4 py-2 bg-brand-800 rounded-full border border-brand-700">🔒 Keamanan Bersama</span>
+                <span class="px-4 py-2 bg-brand-800 rounded-full border border-brand-700">💬 Komunikasi Antarwarga</span>
+                <span class="px-4 py-2 bg-brand-800 rounded-full border border-brand-700">🛒 Dukung Usaha Tetangga</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps Location Section -->
+    <section id="lokasi" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <span class="text-brand-600 font-bold text-xs uppercase tracking-widest block mb-2">Google Maps Presisi</span>
+                <h2 class="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-4">📍 Lokasi Spring View Citra Maja City</h2>
+                <p class="text-gray-600 text-base">Cluster Spring View – Citra Maja City, Kecamatan Maja, Kabupaten Lebak, Banten 42381.</p>
+            </div>
+
+            <div class="bg-gray-50 rounded-3xl p-4 sm:p-8 border border-gray-200 shadow-sm reveal reveal-delay-1">
+                <!-- Embedded Google Maps Frame centered on Cluster Spring View (-6.3481138, 106.3542659) -->
+                <div class="map-wrapper mb-6 shadow-inner border border-gray-300 rounded-2xl">
+                    <iframe 
+                        title="Peta Lokasi Cluster Spring View Citra Maja City"
+                        src="https://maps.google.com/maps?q=-6.3481138,106.3542659&hl=id&z=17&output=embed"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <!-- Location Action Bar -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-5 rounded-2xl border border-gray-200">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-700 font-bold text-base mb-1">
+                            <i class="ph-fill ph-map-pin text-xl"></i> CLUSTER SPRING VIEW
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-600">Jl. Raya Kopo-Maja, Cluster Spring View, Citra Maja City, Kab. Lebak, Banten 42381</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                        <a href="https://maps.app.goo.gl/7Zr1JsxX5eQZdeo38" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs sm:text-sm text-center shadow-md flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-arrow-square-out"></i> Buka Google Maps App
+                        </a>
+                        <button onclick="copyAddress()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1">
+                            <i class="ph-bold ph-copy"></i> Salin Alamat
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Col 1 -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <img src="spring view.jpg" alt="Logo" class="h-10 w-10 object-contain rounded-full border border-brand-400 p-0.5 bg-white" onerror="this.src='https://placehold.co/100x100/ffffff/15803d?text=SV'">
+                        <div>
+                            <span class="font-heading font-bold text-xl text-white block">SPRING VIEW</span>
+                            <span class="text-[10px] text-brand-400 tracking-widest uppercase">Citra Maja City</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed max-w-md">
+                        <strong>Rumah Kita. Lingkungan Kita. Cerita Kita.</strong><br/>
+                        Wadah digital sederhana dari warga, untuk warga, tumbuh bersama di lingkungan Spring View Citra Maja City.
+                    </p>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Menu Website</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm">
+                        <li><a href="#beranda" class="hover:text-brand-400 transition-colors">Beranda</a></li>
+                        <li><a href="#tentang" class="hover:text-brand-400 transition-colors">Tentang Spring View</a></li>
+                        <li><a href="#lingkungan" class="hover:text-brand-400 transition-colors">Lingkungan Kawasan</a></li>
+                        <li><a href="#kehidupan" class="hover:text-brand-400 transition-colors">Komunitas Warga</a></li>
+                        <li><a href="#umkm" class="hover:text-brand-400 transition-colors">UMKM Warga</a></li>
+                        <li><a href="#lokasi" class="hover:text-brand-400 transition-colors">Lokasi Maps</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Kontak & Bantuan</h4>
+                    <ul class="space-y-3 text-xs sm:text-sm text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-map-pin text-brand-400 text-lg shrink-0 mt-0.5"></i>
+                            <span>Cluster Spring View, Citra Maja City, Maja, Lebak, Banten</span>
+                        </li>
+                        <li>
+                            <button onclick="openModal('Hubungi Admin')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors w-full text-center">
+                                💬 Hubungi Pengurus / Admin
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <p>&copy; 2026 Spring View Citra Maja City. All rights reserved.</p>
+                <p class="flex items-center gap-1">
+                    Dari Warga, Untuk Warga, Tumbuh Bersama.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Interactive Modal -->
+    <div id="modal-container" class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/70 backdrop-blur-sm p-4">
+        <div id="modal-card" class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto">
+            
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                <h3 class="font-heading font-bold text-xl text-gray-900" id="modal-title">Formulir Pendaftaran UMKM</h3>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <div id="modal-body" class="space-y-4 text-sm text-gray-600">
+                <!-- Dynamic Content Populated by JS -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-[110] hidden bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-gray-700 text-xs font-semibold flex items-center gap-2">
+        <i class="ph-fill ph-check-circle text-brand-400 text-lg"></i>
+        <span id="toast-message">Alamat berhasil disalin!</span>
+    </div>
+
+    <script>
+        // 1. Mobile Menu Toggle Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = 'ph ph-list text-2xl';
+            } else {
+                menuIcon.className = 'ph ph-x text-2xl';
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'ph ph-list text-2xl';
+        }
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+        // 2. Scroll Reveal Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // 3. Address Copy Function
+        function copyAddress() {
+            const fullAddress = "Jl. Raya Kopo-Maja, Cluster Spring View, Citra Maja City, Kec. Maja, Kabupaten Lebak, Banten 42381";
+            
+            // Clipboard copy execution
+            const tempInput = document.createElement("input");
+            tempInput.value = fullAddress;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast("Alamat Cluster Spring View berhasil disalin!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // 4. Modal Handler Logic
+        const modalContainer = document.getElementById('modal-container');
+        const modalCard = document.getElementById('modal-card');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+
+        function openModal(type) {
+            modalTitle.textContent = type;
+
+            if (type === 'Pendaftaran UMKM') {
+                modalBody.innerHTML = `
+                    <p class="text-xs text-gray-500 mb-4">Mari bergabung dengan Spring View UMKM. Tampilkan usaha Anda agar mudah ditemukan tetangga.</p>
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nama Usaha / Toko *</label>
+                            <input type="text" required placeholder="Contoh: Dapur Mama Spring, Laundry Cepat" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nama Pemilik *</label>
+                            <input type="text" required placeholder="Nama lengkap Anda" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Usaha *</label>
+                            <select required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                                <option value="">Pilih Kategori</option>
+                                <option value="Kuliner">Kuliner (Makanan/Minuman/Kue)</option>
+                                <option value="Kebutuhan">Kebutuhan (Sembako/Air/Perlengkapan)</option>
+                                <option value="Jasa">Jasa & Keahlian (Laundry/Teknisi/Les/Tukang)</option>
+                                <option value="Kreatif">Produk Kreatif (Fashion/Handmade/Hampers)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nomor WhatsApp *</label>
+                            <input type="tel" required placeholder="08xxxxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Deskripsi Singkat / Produk Unggulan</label>
+                            <textarea rows="2" placeholder="Tuliskan menu utama, jasa yang ditawarkan, atau produk favorit..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow-md mt-2">
+                            Kirim Pendaftaran via WhatsApp
+                        </button>
+                    </form>
+                `;
+            } else if (type === 'Portal Informasi Warga') {
+                modalBody.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="p-3 bg-brand-50 rounded-xl border border-brand-100">
+                            <h5 class="font-bold text-brand-900 text-xs">📌 Pengumuman Terbaru</h5>
+                            <p class="text-xs text-brand-700 mt-1">Kegiatan Gotong Royong Lingkungan & Pendataan UMKM Spring View sedang berlangsung.</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+                            <h5 class="font-bold text-gray-900 text-xs">📞 Kontak Darurat Lingkungan</h5>
+                            <p class="text-xs text-gray-600 mt-1">Keamanan Pos Utama / Pengurus RT: Hubungi Sekretariat Warga.</p>
+                        </div>
+                        <button onclick="closeModal()" class="w-full py-2.5 bg-gray-900 text-white font-bold rounded-xl text-xs">
+                            Tutup Portal
+                        </button>
+                    </div>
+                `;
+            } else {
+                modalBody.innerHTML = `
+                    <p class="text-gray-600 text-xs">Fitur layanan "<strong>${type}</strong>" siap dihubungkan dengan WhatsApp Pengurus/Admin Warga Spring View.</p>
+                    <div class="pt-4 flex gap-2">
+                        <button onclick="closeModal()" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-xs">
+                            Mengerti
+                        </button>
+                    </div>
+                `;
+            }
+
+            modalContainer.classList.remove('hidden');
+            modalContainer.classList.add('flex');
+            setTimeout(() => {
+                modalCard.classList.remove('scale-95', 'opacity-0');
+                modalCard.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalCard.classList.remove('scale-100', 'opacity-100');
+            modalCard.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modalContainer.classList.add('hidden');
+                modalContainer.classList.remove('flex');
+            }, 200);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast("Pendaftaran Anda telah terkirim! Admin akan segera memverifikasi.");
+        }
+
+        // 5. Search & Filter Mock Functionality
+        function setSearch(term) {
+            document.getElementById('umkm-search-input').value = term;
+            performSearch();
+        }
+
+        function performSearch() {
+            const query = document.getElementById('umkm-search-input').value.trim();
+            if (query) {
+                openModal(`Hasil Pencarian: "${query}"`);
+            } else {
+                showToast("Ketik kata kunci yang ingin dicari.");
+            }
+        }
+
+        function filterCategory(cat) {
+            openModal(`Katalog UMKM: ${cat}`);
+        }
+    </script>
+</body>
+</html>
