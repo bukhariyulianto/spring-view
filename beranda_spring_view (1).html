@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring View - Citra Maja City</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#F8FAFC',
+                            text: '#1F2937',
+                            primary: '#166534',
+                            secondary: '#15803D',
+                            light: '#dcfce7'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(22, 101, 52, 0.1)',
+                        'hover-card': '0 25px 50px -12px rgba(22, 101, 52, 0.18)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1F2937;
+        }
+        
+        .glass-nav {
+            background: rgba(248, 250, 252, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(22, 101, 52, 0.08);
+        }
+
+        .tt25-card {
+            background: #ffffff;
+            border: 1px solid rgba(22, 101, 52, 0.08);
+            border-radius: 1.75rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tt25-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -12px rgba(22, 101, 52, 0.15);
+            border-color: rgba(21, 128, 61, 0.3);
+        }
+
+        .bg-pattern {
+            background-image: radial-gradient(rgba(22, 101, 52, 0.08) 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-brand-primary selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                
+                <!-- Logo / Site Title -->
+                <a href="#beranda" class="flex items-center gap-3 group focus:outline-none">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-primary flex items-center justify-center text-white shadow-md group-hover:bg-brand-secondary transition-colors">
+                        <i class="ph-bold ph-leaf text-2xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-heading font-extrabold text-xl sm:text-2xl text-brand-primary tracking-tight">SPRING VIEW</span>
+                        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Citra Maja City</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu with Relate Visual Icons -->
+                <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+                    <a href="#beranda" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-house text-brand-primary text-base"></i> Beranda
+                    </a>
+                    <a href="#tentang" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-info text-brand-primary text-base"></i> Tentang
+                    </a>
+                    <a href="#tiperumah" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-buildings text-brand-primary text-base"></i> Tipe Rumah
+                    </a>
+                    <a href="#umkm" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-storefront text-brand-primary text-base"></i> UMKM
+                    </a>
+                    <a href="#komunitas" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-users-three text-brand-primary text-base"></i> Komunitas
+                    </a>
+                    <a href="#media" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-share-network text-brand-primary text-base"></i> Media Warga
+                    </a>
+                    <a href="#lokasi" class="flex items-center gap-2 text-sm font-semibold text-brand-text hover:text-brand-secondary transition-colors py-2">
+                        <i class="ph-fill ph-map-pin text-brand-primary text-base"></i> Lokasi
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center text-brand-primary focus:outline-none hover:bg-gray-200 transition-colors" aria-label="Toggle Navigation">
+                        <i class="ph ph-list text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu with Icons -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-100 shadow-2xl absolute w-full animate-fadeIn">
+            <div class="px-6 py-6 space-y-3">
+                <a href="#beranda" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text bg-gray-50">
+                    <i class="ph-fill ph-house text-brand-primary text-xl"></i> Beranda
+                </a>
+                <a href="#tentang" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-info text-brand-primary text-xl"></i> Tentang
+                </a>
+                <a href="#tiperumah" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-buildings text-brand-primary text-xl"></i> Tipe Rumah
+                </a>
+                <a href="#umkm" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-storefront text-brand-primary text-xl"></i> UMKM
+                </a>
+                <a href="#komunitas" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-users-three text-brand-primary text-xl"></i> Komunitas
+                </a>
+                <a href="#media" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-share-network text-brand-primary text-xl"></i> Media Warga
+                </a>
+                <a href="#lokasi" class="mobile-link flex items-center gap-3 px-4 py-3 rounded-2xl text-base font-bold text-brand-text hover:bg-gray-50">
+                    <i class="ph-fill ph-map-pin text-brand-primary text-xl"></i> Lokasi
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="pt-36 pb-20 md:pt-48 md:pb-32 bg-pattern relative border-b border-gray-200 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            
+            <div class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-brand-light text-brand-primary text-sm font-bold mb-8 border border-green-200 shadow-sm">
+                <i class="ph-fill ph-leaf text-lg"></i> 🌿 Dari Warga, Untuk Warga, Tumbuh Bersama
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold text-brand-primary tracking-tight mb-6 leading-tight">
+                SPRING VIEW
+            </h1>
+            
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-brand-text mb-8">
+                Hunian Nyaman untuk Tumbuh Bersama
+            </h2>
+            
+            <p class="max-w-2xl mx-auto text-lg text-gray-600 mb-10 leading-relaxed">
+                Selamat datang di Spring View Citra Maja City. Ruang hunian dan wadah digital sederhana yang dirancang sebagai tempat membangun kehidupan keluarga, menciptakan kenyamanan, serta menumbuhkan potensi komunitas.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+                <a href="#tiperumah" class="w-full sm:w-auto px-8 py-4 bg-brand-primary hover:bg-brand-secondary text-white rounded-2xl font-bold text-base shadow-lg transition-all flex items-center justify-center gap-2 hover:-translate-y-1">
+                    <i class="ph-bold ph-house text-xl"></i> TIPE RUMAH
+                </a>
+                <a href="#lokasi" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-gray-50 text-brand-text border-2 border-gray-200 rounded-2xl font-bold text-base shadow-sm transition-all flex items-center justify-center gap-2 hover:-translate-y-1">
+                    <i class="ph-bold ph-map-pin text-brand-primary text-xl"></i> LOKASI
+                </a>
+            </div>
+
+            <!-- Kartu Tautan Visual Eksternal (Rumah123 & SiKumbang Tapera) -->
+            <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+                <a href="https://www.rumah123.com/properti/lebak-maja/dijual-murah-rumah-citra-maja-cluster-spring-view-maja-hos10948459/" target="_blank" class="p-5 bg-white/95 backdrop-blur-md rounded-2xl border border-gray-200 shadow-soft hover:shadow-hover-card hover:border-brand-primary transition-all flex items-center gap-4 group">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-inner">
+                        <i class="ph-fill ph-house-line text-2xl"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-orange-600 uppercase tracking-wider block">Listing Properti</span>
+                        <h4 class="text-sm font-bold text-brand-text truncate">Rumah Citra Maja Cluster Spring View</h4>
+                        <span class="text-xs text-gray-500 flex items-center gap-1 mt-0.5">Rumah123 <i class="ph-bold ph-arrow-square-out"></i></span>
+                    </div>
+                </a>
+
+                <a href="https://sikumbang.tapera.go.id/lokasi-perumahan/RKB1320202021T005" target="_blank" class="p-5 bg-white/95 backdrop-blur-md rounded-2xl border border-gray-200 shadow-soft hover:shadow-hover-card hover:border-brand-primary transition-all flex items-center gap-4 group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-brand-primary flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-inner">
+                        <i class="ph-fill ph-shield-check text-2xl"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-brand-primary uppercase tracking-wider block">Data Resmi Tapera</span>
+                        <h4 class="text-sm font-bold text-brand-text truncate">SiKumbang Perumahan Spring View</h4>
+                        <span class="text-xs text-gray-500 flex items-center gap-1 mt-0.5">Sikumbang Tapera <i class="ph-bold ph-arrow-square-out"></i></span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Tipe Rumah Section -->
+    <section id="tiperumah" class="py-20 md:py-28 bg-white relative overflow-hidden">
+        <div class="absolute -right-20 top-0 opacity-5 pointer-events-none transition-transform duration-1000 hover:scale-110">
+            <i class="ph-fill ph-buildings text-[400px] text-brand-primary"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-bold tracking-wider uppercase text-sm mb-3 block"><i class="ph-fill ph-house-line mr-1"></i> Spesifikasi & Pilihan Hunian</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-text">Tipe Rumah Spring View</h2>
+                <div class="w-24 h-1.5 bg-brand-primary mx-auto mt-6 rounded-full"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Beragam pilihan hunian subsidi dan komersial yang dirancang untuk kenyamanan keluarga dengan tata ruang fungsional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Tipe 1 -->
+                <div class="tt25-card p-8 flex flex-col h-full bg-white relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-emerald-400 group-hover:h-3 transition-all"></div>
+                    <div class="mb-8">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="ph-fill ph-plant text-3xl text-emerald-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-heading font-bold text-brand-text">ORCHID</h3>
+                        <p class="text-lg text-brand-secondary font-semibold mt-1">22/60 m²</p>
+                        <span class="inline-block mt-3 text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">Subsidi</span>
+                    </div>
+                    <div class="mt-auto space-y-4 border-t border-gray-100 pt-6">
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-bed text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Tidur</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-shower text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Mandi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipe 2 -->
+                <div class="tt25-card p-8 flex flex-col h-full bg-white relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-blue-400 group-hover:h-3 transition-all"></div>
+                    <div class="mb-8">
+                        <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="ph-fill ph-flower-tulip text-3xl text-blue-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-heading font-bold text-brand-text">LILY</h3>
+                        <p class="text-lg text-brand-secondary font-semibold mt-1">27/72 m²</p>
+                        <span class="inline-block mt-3 text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Komersial</span>
+                    </div>
+                    <div class="mt-auto space-y-4 border-t border-gray-100 pt-6">
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-bed text-lg"></i></div>
+                            <span class="font-medium text-sm">2 Kamar Tidur</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-shower text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Mandi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipe 3 -->
+                <div class="tt25-card p-8 flex flex-col h-full bg-white relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-purple-400 group-hover:h-3 transition-all"></div>
+                    <div class="mb-8">
+                        <div class="w-16 h-16 rounded-2xl bg-purple-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="ph-fill ph-flower text-3xl text-purple-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-heading font-bold text-brand-text">TULIPS</h3>
+                        <p class="text-lg text-brand-secondary font-semibold mt-1">36/72 m²</p>
+                        <span class="inline-block mt-3 text-xs font-bold bg-purple-50 text-purple-600 px-3 py-1 rounded-full">Komersial</span>
+                    </div>
+                    <div class="mt-auto space-y-4 border-t border-gray-100 pt-6">
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-bed text-lg"></i></div>
+                            <span class="font-medium text-sm">2 Kamar Tidur</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-shower text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Mandi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipe 4 -->
+                <div class="tt25-card p-8 flex flex-col h-full bg-white relative overflow-hidden border-2 border-brand-primary group shadow-soft">
+                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl shadow-sm z-10">HOOK / SUDUT</div>
+                    <div class="mb-8 mt-2">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-light flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="ph-fill ph-house-line text-3xl text-brand-primary"></i>
+                        </div>
+                        <h3 class="text-2xl font-heading font-bold text-brand-text">ORCHID HOOK</h3>
+                        <p class="text-lg text-brand-secondary font-semibold mt-1">22/82 m²</p>
+                        <span class="inline-block mt-3 text-xs font-bold bg-brand-light text-brand-secondary px-3 py-1 rounded-full">Subsidi Khusus</span>
+                    </div>
+                    <div class="mt-auto space-y-4 border-t border-gray-100 pt-6">
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-bed text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Tidur</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-600">
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-brand-primary"><i class="ph-bold ph-shower text-lg"></i></div>
+                            <span class="font-medium text-sm">1 Kamar Mandi</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Visual Section (Dummy Visuals) -->
+    <section id="galeri-visual" class="py-20 md:py-28 bg-brand-bg border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-bold tracking-wider uppercase text-sm mb-3 block"><i class="ph-fill ph-images mr-1"></i> Dokumentasi & Visual Lapangan</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-text">Galeri Visual Spring View</h2>
+                <div class="w-24 h-1.5 bg-brand-primary mx-auto mt-6 rounded-full"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Gambaran nyata lingkungan, lanskap perumahan, serta suasana asri di kawasan Cluster Spring View.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="tt25-card overflow-hidden group bg-white flex flex-col">
+                    <div class="h-60 bg-emerald-50 relative flex flex-col items-center justify-center p-6 text-center border-b border-gray-100">
+                        <div class="w-20 h-20 bg-emerald-100 rounded-3xl flex items-center justify-center text-brand-primary mb-3 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                            <i class="ph-fill ph-buildings text-4xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-brand-secondary uppercase tracking-widest bg-white px-3 py-1 rounded-full shadow-xs">Gerbang & Lanskap</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2">Tata Lingkungan Asri</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Kawasan tertata dengan infrastruktur jalan lebar, paving block rapi, dan sistem satu pintu (one-gate system) yang aman.</p>
+                    </div>
+                </div>
+
+                <div class="tt25-card overflow-hidden group bg-white flex flex-col">
+                    <div class="h-60 bg-blue-50 relative flex flex-col items-center justify-center p-6 text-center border-b border-gray-100">
+                        <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                            <i class="ph-fill ph-house-line text-4xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-white px-3 py-1 rounded-full shadow-xs">Unit Hunian</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2">Desain Fungsional Modern</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Pilihan rumah dengan sirkulasi udara optimal, halaman depan, dan struktur bangunan yang siap huni untuk keluarga muda.</p>
+                    </div>
+                </div>
+
+                <div class="tt25-card overflow-hidden group bg-white flex flex-col">
+                    <div class="h-60 bg-amber-50 relative flex flex-col items-center justify-center p-6 text-center border-b border-gray-100">
+                        <div class="w-20 h-20 bg-amber-100 rounded-3xl flex items-center justify-center text-amber-600 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                            <i class="ph-fill ph-tree text-4xl"></i>
+                        </div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest bg-white px-3 py-1 rounded-full shadow-xs">Kawasan Kota Mandiri</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2">Fasilitas Publik Terpadu</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Berada di dalam kawasan pengembangan Citra Maja City yang terintegrasi dengan stasiun KRL, pasar modern, dan sarana pendidikan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang Section -->
+    <section id="tentang" class="py-20 md:py-28 bg-brand-bg border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <i class="ph-fill ph-tree text-6xl text-brand-primary mb-6 animate-bounce"></i>
+            <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-text mb-8">
+                Tempat Tinggal, Tempat Bertumbuh
+            </h2>
+            
+            <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-12">
+                Setiap keluarga memiliki cerita tentang rumah yang mereka impikan. Spring View hadir sebagai bagian dari perjalanan tersebut di kawasan Citra Maja City.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left" id="komunitas">
+                <div class="p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-hover-card hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-100 transition-colors shadow-sm">
+                        <i class="ph-fill ph-heart text-3xl text-red-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-text mb-3">Komunitas Warga</h4>
+                    <p class="text-gray-600 leading-relaxed text-sm">Membangun interaksi sosial yang sehat, rukun, dan saling mendukung antartetangga dalam lingkungan sehari-hari.</p>
+                </div>
+                <div class="p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-hover-card hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-100 transition-colors shadow-sm">
+                        <i class="ph-fill ph-users-three text-3xl text-blue-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-text mb-3">Ruang Bersama</h4>
+                    <p class="text-gray-600 leading-relaxed text-sm">Fasilitas dan area terbuka yang dirancang untuk mendukung berbagai kegiatan warga, interaksi, dan keluarga.</p>
+                </div>
+                <div class="p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-hover-card hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-brand-light rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors shadow-sm">
+                        <i class="ph-fill ph-shield-check text-3xl text-brand-primary"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-text mb-3">Lingkungan Nyaman</h4>
+                    <p class="text-gray-600 leading-relaxed text-sm">Menjaga keamanan terpadu, kebersihan, dan ketertiban bersama untuk kenyamanan seluruh keluarga.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UMKM Komplit Section -->
+    <section id="umkm" class="py-20 md:py-28 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-bold tracking-wider uppercase text-sm mb-3 block"><i class="ph-fill ph-storefront mr-1"></i> Ekonomi Mandiri Warga</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-text">UMKM Spring View</h2>
+                <div class="w-24 h-1.5 bg-brand-primary mx-auto mt-6 rounded-full"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Dukung usaha lokal tetangga kita. Temukan dan nikmati berbagai produk serta jasa unggulan dari warga untuk warga di Cluster Spring View.</p>
+            </div>
+
+            <!-- Kategori UMKM -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="px-6 py-2.5 rounded-full bg-brand-primary text-white font-semibold text-sm shadow-md transition-transform hover:scale-105">Semua</button>
+                <button class="px-6 py-2.5 rounded-full bg-gray-100 text-gray-600 hover:bg-brand-light hover:text-brand-primary font-semibold text-sm transition-all">Kuliner</button>
+                <button class="px-6 py-2.5 rounded-full bg-gray-100 text-gray-600 hover:bg-brand-light hover:text-brand-primary font-semibold text-sm transition-all">Jasa & Layanan</button>
+                <button class="px-6 py-2.5 rounded-full bg-gray-100 text-gray-600 hover:bg-brand-light hover:text-brand-primary font-semibold text-sm transition-all">Kebutuhan Harian</button>
+            </div>
+
+            <!-- Grid Komplit UMKM -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- UMKM 1 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-orange-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-hamburger text-7xl text-orange-400 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-orange-600 shadow-sm">Kuliner</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Dapur Mba Aisyah</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Menyediakan berbagai macam lauk pauk matang, nasi kotak, dan aneka jajanan pasar setiap pagi. Menerima pesanan katering harian.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok A2/15</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMKM 2 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-blue-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-wrench text-7xl text-blue-400 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-blue-600 shadow-sm">Jasa Layanan</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Mandiri Teknik AC</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Melayani cuci AC, perbaikan kulkas, mesin cuci, dan instalasi listrik rumahan. Dikerjakan rapi, cepat, bergaransi, dan harga tetangga.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok B1/08</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Hubungi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMKM 3 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-purple-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-tote text-7xl text-purple-400 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-purple-600 shadow-sm">Kebutuhan Harian</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Toko Berkah Keluarga</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Sedia beras, minyak goreng, telur, gas elpiji 3kg, galon air mineral, dan berbagai kebutuhan dapur sehari-hari. Siap antar gratis ongkir.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok C3/22</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMKM 4 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-emerald-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-plant text-7xl text-emerald-400 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-emerald-600 shadow-sm">Tanaman & Hobi</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Taman Asri Flora</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Penyedia aneka tanaman hias pot, pupuk organik, media tanam siap pakai, serta jasa penataan halaman depan rumah cluster.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok A1/05</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMKM 5 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-pink-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-scissors text-7xl text-pink-400 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-pink-600 shadow-sm">Fashion & Salon</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Salon & Pangkas Rambut Arsy</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Layanan potong rambut dewasa & anak, cuci blow, serta perawatan salon rumahan dengan tarif bersahabat bagi warga sekitar.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok B2/12</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Booking
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMKM 6 -->
+                <div class="tt25-card overflow-hidden group flex flex-col h-full bg-brand-bg">
+                    <div class="h-48 bg-amber-100 relative overflow-hidden flex items-center justify-center">
+                        <i class="ph-fill ph-book-open text-7xl text-amber-500 group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-amber-700 shadow-sm">Pendidikan</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-text mb-2 group-hover:text-brand-primary transition-colors">Bimbingan Belajar Ceria</h3>
+                        <p class="text-gray-600 text-sm mb-6 line-clamp-3">Les privat & kelompok untuk anak SD/SMP mencakup mata pelajaran sekolah, baca tulis (Calistung), serta mengaji ramah anak.</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-gray-500 flex items-center gap-1"><i class="ph-fill ph-map-pin text-brand-primary text-lg"></i> Blok C1/04</span>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-2 bg-[#25D366] hover:bg-green-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                                <i class="ph-fill ph-whatsapp-logo text-lg"></i> Tanya
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-16 text-center">
+                <a href="#kontak" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-brand-primary text-brand-primary rounded-2xl font-bold hover:bg-brand-light hover:shadow-md transition-all">
+                    <i class="ph-bold ph-plus-circle text-xl"></i> Daftarkan Usaha Anda di Direktori Warga
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Sosial Warga Spring View Section -->
+    <section id="media" class="py-20 md:py-28 bg-brand-primary text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="1" fill="none"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-pattern)"></rect>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="text-green-200 font-bold tracking-wider uppercase text-sm mb-3 block"><i class="ph-fill ph-share-network mr-1"></i> Terhubung & Berbagi Informasi</span>
+            <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-white mb-6">Media Sosial Warga Spring View</h2>
+            <div class="w-24 h-1.5 bg-green-400 mx-auto mt-6 rounded-full mb-8"></div>
+            <p class="max-w-2xl mx-auto text-green-100 text-lg mb-14 leading-relaxed">Ikuti update kegiatan warga, informasi ronda malam, laporan kebersihan lingkungan, hingga galeri acara keluarga di kanal resmi Cluster Spring View.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- Instagram Warga -->
+                <a href="https://instagram.com" target="_blank" class="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 hover:bg-white/20 transition-all flex flex-col items-center group shadow-soft">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white mb-6 shadow-md group-hover:scale-110 transition-transform">
+                        <i class="ph-fill ph-instagram-logo text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Instagram Warga</h3>
+                    <p class="text-sm text-green-100 mb-6">@springview.official</p>
+                    <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/20 px-4 py-2 rounded-full">Kunjungi <i class="ph-bold ph-arrow-right"></i></span>
+                </a>
+
+                <!-- TikTok Warga -->
+                <a href="https://tiktok.com" target="_blank" class="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 hover:bg-white/20 transition-all flex flex-col items-center group shadow-soft">
+                    <div class="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform border border-white/10">
+                        <i class="ph-fill ph-tiktok-logo text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">TikTok Komunitas</h3>
+                    <p class="text-sm text-green-100 mb-6">@warga.springview</p>
+                    <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/20 px-4 py-2 rounded-full">Kunjungi <i class="ph-bold ph-arrow-right"></i></span>
+                </a>
+
+                <!-- YouTube Warga -->
+                <a href="https://youtube.com" target="_blank" class="p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 hover:bg-white/20 transition-all flex flex-col items-center group shadow-soft">
+                    <div class="w-16 h-16 rounded-2xl bg-red-600 text-white flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform">
+                        <i class="ph-fill ph-youtube-logo text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">YouTube Channel</h3>
+                    <p class="text-sm text-green-100 mb-6">Spring View TV</p>
+                    <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/20 px-4 py-2 rounded-full">Kunjungi <i class="ph-bold ph-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lokasi & GMaps Real Section -->
+    <section id="lokasi" class="py-20 md:py-28 bg-brand-bg border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-bold tracking-wider uppercase text-sm mb-3 block"><i class="ph-fill ph-map-pin mr-1"></i> Peta & Petunjuk Arah</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-brand-text">Lokasi Cluster Spring View</h2>
+                <div class="w-24 h-1.5 bg-brand-primary mx-auto mt-6 rounded-full"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Berada di kawasan strategis kota mandiri Citra Maja City, Pasirkembang, Kec. Maja, Kabupaten Lebak, Banten.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Info Alamat -->
+                <div class="tt25-card p-8 bg-white h-full flex flex-col justify-between shadow-soft">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-brand-light flex items-center justify-center text-brand-primary mb-6 shadow-sm">
+                            <i class="ph-fill ph-compass text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-heading font-bold text-brand-text mb-4">Alamat Lengkap</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            <strong>Cluster Spring View</strong><br>
+                            Citra Maja City, Pasirkembang, Kec. Maja,<br>
+                            Kabupaten Lebak, Banten 42381
+                        </p>
+                        
+                        <div class="space-y-3 border-t border-gray-100 pt-6">
+                            <div class="flex items-center gap-3 text-sm text-gray-600">
+                                <i class="ph-bold ph-train text-brand-primary text-xl"></i>
+                                <span>Dekat Stasiun KRL Maja</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-gray-600">
+                                <i class="ph-bold ph-storefront text-brand-primary text-xl"></i>
+                                <span>Dekat Pasar Modern Citra Maja City</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <a href="https://maps.google.com/?q=Citra+Maja+City+Pasirkembang+Maja+Lebak+Banten" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-brand-secondary hover:bg-brand-primary text-white font-bold rounded-2xl transition-colors shadow-md">
+                            <i class="ph-bold ph-navigation-arrow"></i> Buka Google Maps Full
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Maps Interactive Iframe pointing accurately to Citra Maja City / Maja area -->
+                <div class="lg:col-span-2 h-[450px] rounded-3xl overflow-hidden shadow-soft border border-gray-200 bg-white relative">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.83404550875!2d106.3542659!3d-6.3481138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e420f1883c7943f%3A0x9a3e1b7c12345678!2sCitra%20Maja%20City!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Updated Tagline -->
+    <footer id="kontak" class="bg-white border-t border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            
+            <div class="flex items-center gap-2 text-brand-primary mb-4">
+                <div class="w-10 h-10 rounded-xl bg-brand-light flex items-center justify-center text-brand-primary">
+                    <i class="ph-fill ph-leaf text-xl"></i>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-heading font-extrabold text-brand-text tracking-tight mb-1">
+                SPRING VIEW
+            </h3>
+            <p class="text-sm font-bold text-brand-secondary mb-4 uppercase tracking-wider">Citra Maja City</p>
+            
+            <p class="text-lg font-bold text-gray-700 mb-10">Hunian Nyaman untuk Tumbuh Bersama</p>
+            
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-10">
+                <a href="#tentang" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">Tentang</a>
+                <span class="text-gray-300">|</span>
+                <a href="#tiperumah" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">Tipe Rumah</a>
+                <span class="text-gray-300">|</span>
+                <a href="#umkm" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">UMKM</a>
+                <span class="text-gray-300">|</span>
+                <a href="#komunitas" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">Komunitas</a>
+                <span class="text-gray-300">|</span>
+                <a href="#media" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">Media Warga</a>
+                <span class="text-gray-300">|</span>
+                <a href="#lokasi" class="text-sm font-bold text-gray-500 hover:text-brand-primary transition-colors">Lokasi</a>
+            </div>
+
+            <div class="w-16 h-px bg-gray-200 mb-8"></div>
+
+            <p class="text-sm text-gray-400">
+                Portal informasi dan dokumentasi warga Cluster Spring View Citra Maja City.
+            </p>
+            
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Community Quick Button -->
+    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20bergabung%20atau%20bertanya%20mengenai%20Cluster%20Spring%20View" target="_blank" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110 focus:outline-none" aria-label="Chat WhatsApp Warga">
+        <i class="ph-fill ph-whatsapp-logo"></i>
+    </a>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = 'ph ph-list text-2xl';
+            } else {
+                menuIcon.className = 'ph ph-x text-2xl';
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'ph ph-list text-2xl';
+        }
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+    </script>
+
+</body>
+</html>
